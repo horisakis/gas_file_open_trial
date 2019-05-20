@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base target="_top">
+        <script>
+            // 全てのフォームをイベントリスナーに登録する
+            function preventFormSubmit() {
+                var forms = document.querySelectorAll("form")
+                for (var i = 0; i < forms.length; i++) {
+                    forms[i].addEventListener("submit", function (event) {
+                        event.preventDefault()
+                        
+                    });
+                    
+                }
+                
+            }
+            window.addEventListener("load", preventFormSubmit)
+
+            // フォームでのサブミットで呼ばれる処理
+            function readFile(formObject) {
+                // GASで定義した関数を呼び出す
+                google.script.run.writeSheet(formObject)
+                
+            }
+        </script>
+    </head>
+    <body>
+        <form id="myForm" onsubmit="readFile(this)" enctype="multipart/form-data">
+            <input type="file" name="myFile">
+            <button type="submit">読み込み</button>
+        </form>
+    </body>
+</html>
